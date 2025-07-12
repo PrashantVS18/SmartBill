@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Billing.Utility
 
 This module provides **shared infrastructure utilities** for the SmartBill project.
