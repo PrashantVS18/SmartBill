@@ -1,0 +1,57 @@
+# .NET build files
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+
+# Rider
+.idea/
+
+# Visual Studio
+.vs/
+*.vcxproj.*
+*.dbmdl
+*.bak
+*.Backup
+
+# Package Management
+packages/
+*.nupkg
+*.snupkg
+*.vsix
+
+# NuGet
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Environment Secrets
+.env
+*.secret
+
+# Others
+*.vsidx
+*.cache
+*.pdb
+*.pidb
+*.sdf
+*.sqlite
+*.db
+
+# DLLs if manually added
+DLLs/
