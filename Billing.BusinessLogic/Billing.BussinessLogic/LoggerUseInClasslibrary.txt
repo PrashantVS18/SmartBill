@@ -1,0 +1,31 @@
+public class InvoiceService
+{
+    private readonly IContextualLogger _logger = LogManagerExtensions.ForContext<InvoiceService>();
+
+    public async Task<Invoice> CreateInvoiceAsync(CreateInvoiceRequest request)
+    {
+        using (new PerformanceTracker("CreateInvoice", nameof(InvoiceService), 
+               new { CustomerId = request.CustomerId, Amount = request.Amount }))
+        {
+            _logger.LogInfo("Creating invoice for customer: {CustomerId}", request.CustomerId);
+            
+            try
+            {
+                var invoice = new Invoice();
+                // Your business logic here
+                
+                _logger.LogBusinessOperation("InvoiceCreation", "Success", new { 
+                    InvoiceId = invoice.Id, 
+                    Amount = invoice.Amount 
+                });
+                
+                return invoice;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Invoice creation failed for customer: {CustomerId}", request.CustomerId);
+                throw;
+            }
+        }
+    }
+}
