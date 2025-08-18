@@ -1,33 +1,39 @@
 ﻿using Microsoft.AspNetCore.Http;
-
 using Billing.Utility;
 using Microsoft.AspNetCore.Mvc;
 using Biling.DataModels.LoginModels;
-
+using Billing.BussinessLogic;
+using Microsoft.AspNetCore.Authorization;
 namespace Billing.API.Controllers.Login
 {
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
     {
-        [HttpPost]
-        [Route("login")]
-        public IActionResult Login([FromBody] LoginRequest logInRequest)
+        private readonly ILoginService _loginService;
+
+        public LoginController(ILoginService loginService)
+        {
+            _loginService = loginService;
+        }
+
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             try
             {
-                LoginResponse response = new LoginResponse()
-                {
-                    Success = true,
-                    Message = "sucessfully login",
-                    Token = "abcd",
-                    User = new User() { Username = logInRequest.UserName}
-                };
-                return Ok(response);
+                var result = await _loginService.LoginAsync(request);
+                string abc = null;
+                return Ok(result);
             }
-            catch(Exception ex) 
+            catch (UnauthorizedAccessException ex)
             {
-                return BadRequest(ex.Message);
+                return Unauthorized(new { message = ex.Message });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
             }
         }
     }
